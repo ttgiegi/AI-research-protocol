@@ -1,12 +1,34 @@
 # AI Research Protocol
 
-## Why This Skill Exists
+> **Evidence before conclusions.**
+>
+> **Experiments before modifications.**
+>
+> **Traceability before optimization.**
+>
+> **Reproducibility before convenience.**
 
-As modern large language models (LLMs) become increasingly capable of generating ideas, they are most commonly used to answer questions and write code. Yet long-running, open-ended scientific projects often fail or progress less efficiently with LLM assistance than straightforward coding tasks. The limiting factor is usually not programming ability. It is protocol drift, loss of context, and decisions that were never recorded.
+## Why This Workflow Exists
 
-This repository provides a structured workflow that treats an AI as a research collaborator rather than an answer generator. Its central principle is simple: **evidence first, experiments driven by hypotheses, and protocols recorded before code is changed.**
+Long-running AI-assisted research projects often fail not because the AI cannot generate code, but because project state, evidence, and decision history gradually drift over time. As modern large language models (LLMs) become increasingly capable of generating ideas, they are most commonly used to answer questions and write code. Long-running, open-ended research needs more than either of those interactions.
 
-Every project has one or more authoritative sources that define expected behavior, constraints, or acceptance criteria. A source may be a scientific paper, standard, specification, dataset, experimental observation, official documentation, physical law, or approved requirement. The core protocol works from those sources; focused profiles add domain-specific rules such as paper reproduction and numerical-solver analysis.
+This Skill places AI inside a structured research protocol. It treats an AI as a research collaborator rather than an answer generator: **evidence first, experiments driven by hypotheses, and protocols recorded before code is changed.**
+
+**The goal is to maximize validated knowledge gained per unit time.** It is not to maximize code changes, experiment count, or token use.
+
+Every project has one or more authoritative sources that define expected behavior, constraints, or acceptance criteria. Different projects may rely on different sources:
+
+```text
+Authoritative Sources
+  |- Scientific paper
+  |- RFC or standard
+  |- Datasheet
+  |- Experimental observation
+  |- Requirement specification
+  |- Dataset or official documentation
+```
+
+The core protocol works from those sources; focused profiles add domain-specific rules such as paper reproduction and numerical-solver analysis.
 
 ## Protocol Architecture
 
@@ -27,7 +49,46 @@ Core Protocol
        |- Specification Validation (future)
 ```
 
-The core protocol is source-driven and applies to every mode. Profiles add strict domain-specific safeguards only when their assumptions apply.
+The core protocol is source-driven and applies to every mode. Profiles add strict domain-specific safeguards only when their assumptions apply. Profiles extend the protocol rather than replace it.
+
+## How the Protocol Thinks
+
+```text
+Observe
+  |
+  v
+Hypothesis
+  |
+  v
+Source Trace: Why do we believe this?
+  |
+  v
+Experiment
+  |
+  v
+Evidence
+  |
+  v
+Decision
+```
+
+Source Trace establishes traceability between a hypothesis, a proposed change, and the evidence that supports it. It does not mean that the AI must reread a raw paper or source document at every step.
+
+## Durable Project Memory
+
+**AI conversations are transient. Project knowledge should not be.**
+
+Git, experiment logs, structured knowledge documents, and question queues preserve the project's state outside the chat window. They allow a new AI session to recover the evidence, decisions, experiments, and implementation history needed to continue responsibly.
+
+## Evidence Model
+
+| Tag | Meaning |
+| --- | --- |
+| `[SOURCE]` | Authoritative information that defines expected behavior, constraints, or acceptance criteria. |
+| `[IMPLEMENTATION]` | The current system behavior shown by code, configuration, or project documents. |
+| `[EXPERIMENT]` | Reproducible experimental evidence under stated conditions. |
+| `[OBSERVATION]` | External, measured, or recorded observations. |
+| `[ASSUMPTION]` | Unverified reasoning that must not be treated as fact. |
 
 ## Why This Exists
 
@@ -44,7 +105,7 @@ Long-running AI-assisted research does not usually fail because an agent cannot 
 | Failure mode | Control mechanism |
 | --- | --- |
 | ❌ The AI modifies a module that has already been validated. | **Experiment Log (EXP Log):** preserve what was tested, under which conditions, and what was concluded. |
-| ❌ The AI reinterprets the paper without tracing the source. | **Evidence Tags:** label claims by their source, such as paper evidence, implementation evidence, runtime evidence, or assumption. |
+| ❌ The AI reinterprets a source without tracing it. | **Evidence Tags:** label claims by their source, such as authoritative-source evidence, implementation evidence, runtime evidence, or assumption. |
 | ❌ The AI begins optimizing the wrong problem. | **Goal Stop:** state the current scientific objective and define conditions that make an intervention out of scope. |
 | ❌ The AI forgets historical experiments. | **Git:** use history to recover what changed, when it changed, and whether an execution path ever existed. |
 | ❌ The AI invents a new protocol during the investigation. | **Protocol Freeze:** keep the operating procedure stable unless its revision is explicitly decided and recorded. |
@@ -52,7 +113,7 @@ Long-running AI-assisted research does not usually fail because an agent cannot 
 
 This is not a prompt for generating answers. It is a workflow for managing AI as a research collaborator: preserve the context, make evidence visible, constrain interventions, and record decisions so that progress remains scientifically interpretable.
 
-## Best Practices for AI-Assisted Scientific Reproduction
+## Best Practices for AI-Assisted Research
 
 ### 1. Convert PDFs into AI-Friendly Text First
 
@@ -249,3 +310,5 @@ The problem-decomposition and research-management approach can still be useful i
 This Skill does not guarantee that a research task will succeed. Its purpose is to provide a way of thinking that may help make the work more traceable, evidence-driven, and manageable.
 
 Questions and workflow-improvement suggestions are welcome at [wsh14250@qq.com](mailto:wsh14250@qq.com). I will probably not understand your research domain, but I will be glad to help improve the workflow. I built it while reproducing a decades-old numerical code for a highly nonlinear, coupled physical system from an incomplete source paper.
+
+This Skill does not attempt to replace scientific thinking. It provides a framework in which AI, experiments, evidence, and project history remain consistent throughout long-running research. **The objective is not to make AI more authoritative, but to make research more reproducible.**
